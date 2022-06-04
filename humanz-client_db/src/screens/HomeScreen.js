@@ -41,7 +41,6 @@ function HomeScreen() {
             }
         })
         .then(res => {
-            console.log(res.data)
             setSaveBeforeLastId(saveLastUserId);
             setSaveLastUserId(res.data.userLastID);
             dispatch(updateUsers(res.data.allUsers));
@@ -55,10 +54,8 @@ function HomeScreen() {
     }, [isUpdated, currentPage])
 
     const deleteUserById = async (userId) => {
-        console.log("delete user by this id: ", userId)
         humanzServer.put('/delete-user', {userId})
         .then(res => {
-            console.log(res.data);
             if(res.data.isDeleted) {
                 let tableLen = users.usersArray.length;
                 if (users.usersArray[tableLen - 1] === userId) {
@@ -72,17 +69,15 @@ function HomeScreen() {
     }
 
     const addUser = () => {
-        console.log("add user");
         setShowAddModal(true);
     }
 
     const insertUserToDB = async (userInput) => {
         const input_json = JSON.parse(userInput);
-        console.log("input json: ", input_json);
         humanzServer.post('/add-user', input_json)
         .then(res => {
-            console.log(res)
             setStatus('Added');
+            setIsUpdated(true);
         })
         .catch(e => console.log(e))
     }
@@ -90,10 +85,8 @@ function HomeScreen() {
     const findUsersByFilter = (filter) => {
         if (filter) {
             const filter_json = JSON.parse(filter);
-            console.log(filter_json);
             humanzServer.post('/filter-data', filter_json)
             .then(res => {
-                console.log(res);
                 dispatch(updateUsers(res.data.filteredUsers))
             })
             .catch(e => console.log(e.data))
@@ -105,7 +98,6 @@ function HomeScreen() {
     }
 
     const goToNextPage = () => {
-        console.log("next")
         setCurrentPage((page) => page + 1);
     }
 
@@ -121,7 +113,6 @@ function HomeScreen() {
             }
         })
         .then(res => {
-            console.log(res)
             if(res.data.status === 'success') {
             setGeoIP({
                 ...geoIP, 
@@ -136,7 +127,6 @@ function HomeScreen() {
     }
 
     const handleGeoIpModalClose = () => {
-        console.log("on mouse down!")
         setShowGeoIpModal(false);
     }
 

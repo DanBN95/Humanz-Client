@@ -14,8 +14,6 @@ function AlertMsg({ showModal, handleCloseModal, modalText }) {
         },
     };
 
-    console.log("alert msg is");
-
   return (
     <Modal
     isOpen={showModal}

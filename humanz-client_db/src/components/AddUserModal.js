@@ -25,47 +25,57 @@ function AddUserModal(props) {
 
     const handleClostBtn = () => {
         setIsOpen(false);
-        setUserInput('');
+        
     }
 
     const handleInsertBtn = () => {
-        //validateInsertion();
-        insertUser(userInput);
-        setUserInput('');
-        setIsOpen(false);
+        if (validateInsertion()) {
+            insertUser(userInput);
+            setUserInput('');
+            setIsOpen(false);
+        } 
+        
     }
 
     const validateInsertion = () => {
         const splited = userInput.split('\n');
-        // console.log(splited);
 
-        if (splited.length <= 7)
+        if (splited.length !== 7) {
+            alert('Wrong typo. Try Again')
+            return false;
+        };
         
-        console.log(splited);
-        if (splited[0] !== '{ ' || splited[splited.length - 1] !== '}') {
-            console.log('error in brackets')
+        if (splited[0] !== '{' || splited[splited.length - 1] !== '}') {
             alert('Error in brackets');
+            return false;
         }
 
-        const tempColTitles = [...colTitles];
-        let i;
-        for (i=1; i<splited.length-1; i++) {
-            const rowSplit = splited[i].split('"');
-            console.log(rowSplit);
-
-            if (rowSplit[0] !== '"' || rowSplit[4] !== ',') {alert('Missing or Unnecessary quotes');console.log(i); break;};
+        //const tempColTitles = [...colTitles];
+        // let i;
+        // for (i=1; i<splited.length-1; i++) {
+        //     const rowSplit = splited[i].split('"');
+        //     console.log(rowSplit);
             
-            let index = tempColTitles.indexOf(rowSplit[1]);
-            if (index > -1) tempColTitles.splice(index, 1);
-            else {alert("Missing user information"); break;}
+            // if(rowSplit.length < colTitles.length) {
+            //     alert("Missing user info");
+            //     return false;
+            // }
+                
 
-            if(!(rowSplit[2] === ': ' || rowSplit[2 === ':'])) {alert('Missing colon'); break;};
+            // if (rowSplit[0] !== '"' || rowSplit[4] !== ',') {alert('Missing or Unnecessary quotes');console.log(i); break;};
+            
+            // let index = tempColTitles.indexOf(rowSplit[1]);
+            // if (index > -1) tempColTitles.splice(index, 1);
+            // else {alert("Missing user information"); break;}
 
-            if (rowSplit[3].split('.').length !== 4) {alert('Wrong typing of IP'); break;};
+            // if(!(rowSplit[2] === ': ' || rowSplit[2 === ':'])) {alert('Missing colon'); break;};
 
-        }
+            // if (rowSplit[3].split('.').length !== 4) {alert('Wrong typing of IP'); break;};
 
-        if (i === 6 && tempColTitles.length !== 0) alert("Wrong typing of user information");
+        // }
+
+        // if (i === 6 && tempColTitles.length !== 0) alert("Wrong typing of user information");
+        return true;
         
     }
     

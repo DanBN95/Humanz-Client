@@ -16,7 +16,6 @@ export default function Table({ deleteUser, getGeoIP }) {
     }
 
     const onMouseOver = (index) => {
-        console.log("mouse over: ", index);
         getGeoIP(usersArray[index].IP);
     }
 

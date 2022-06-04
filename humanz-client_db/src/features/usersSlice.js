@@ -10,7 +10,6 @@ const usersSlice = createSlice({
     },
     reducers: {
         updateUsers: (state, action) => {
-            console.log("action payload");
             state.usersArray = action.payload;
         }
     }
